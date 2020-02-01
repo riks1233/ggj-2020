@@ -10,8 +10,8 @@ public class Bubble : MonoBehaviour
         transform.GetChild(0).GetComponent<Animator>().SetTrigger("trigger");
     }
 
-    private void OnMouseDown()
-    {
-        print("chatbubble triggered");
-    }
+    //private void OnMouseDown()
+    //{
+    //    print("chatbubble triggered");
+    //}
 }

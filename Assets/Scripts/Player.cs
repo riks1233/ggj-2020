@@ -11,25 +11,40 @@ public class Player : MonoBehaviour
     public const float dragModifier = 0.8f;
     public const float moveSpeed = 15f;
     public GameObject arrowPrefab;
+    public Animator animator;
+    private float xScale;
 
     private Rigidbody2D rb;
     private Vector2 movement;
 
-
-    private void Start()
+    private void Awake()
     {
-        playerHeight = transform.localScale.y / 2;
+        //playerHeight = transform.localScale.y / 2;
+        xScale = transform.localScale.x;
+        ////print(xScale);
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
+
     // Update is called once per frame
     void Update()
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+        animator.SetFloat("speed", movement.magnitude);
+        
         if (movement.magnitude > 0)
         {
             movement.x = movement.x / movement.magnitude;
             movement.y = movement.y / movement.magnitude;
+
+            if (movement.x > 0 && transform.localScale.x < 0)
+            {
+                FlipSprite(false);
+            } else if (movement.x < 0 && transform.localScale.x > 0)
+            {
+                FlipSprite(true);
+            }
         }
         if (Input.GetButtonDown("Fire1"))
         {
@@ -37,6 +52,18 @@ public class Player : MonoBehaviour
             //Debug.Log("Pressed primary button.");
         }
 
+    }
+
+    private void FlipSprite(bool toLeft)
+    {
+        Vector3 lTemp = transform.localScale;
+        float xScaleToSet = xScale;
+        if (toLeft)
+        {
+            xScaleToSet = -xScale;
+        }
+        lTemp.x = xScaleToSet;
+        transform.localScale = lTemp;
     }
 
     private void FixedUpdate()
