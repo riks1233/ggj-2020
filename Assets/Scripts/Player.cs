@@ -23,7 +23,8 @@ public class Player : MonoBehaviour
         xScale = transform.localScale.x;
         ////print(xScale);
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
+        animator = transform.GetChild(0).GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -52,6 +53,11 @@ public class Player : MonoBehaviour
             //Debug.Log("Pressed primary button.");
         }
 
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        print("player collision");
     }
 
     private void FlipSprite(bool toLeft)
