@@ -6,6 +6,7 @@ public class DialogueSpotArea : MonoBehaviour
 {
 
     public int id;
+    public Transform exclamationMark;
     public ChatVisibleArea chatVisibleArea;
     // Start is called before the first frame update
     void Start()
@@ -44,6 +45,8 @@ public class DialogueSpotArea : MonoBehaviour
         GameEvents.current.GameOver();
         print("AAAAA!!!");
         chatVisibleArea.ShowExclamationMark();
+        //GameEvents.current.SetTargetExclamationMark(exclamationMark);
+
     }
 
     private void OnDestroy()

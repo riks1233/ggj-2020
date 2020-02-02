@@ -24,9 +24,13 @@ public class ComplainingHuman : MonoBehaviour
             if (gameObject.Equals(GameEvents.lastSelectedHuman))
             {
                 print("explosion!");
-                if (GameEvents.pairsFound == 3)
+                GameEvents.current.LaunchPairSound();
+                if (GameEvents.pairsFound == GameEvents.pairsTotal)
                 {
-                    print("YOU WIN!");
+                    GameEvents.current.GameWin();
+                } else
+                {
+                    GameEvents.current.NextBackgroundSound();
                 }
                 Vector3 explosionPos = transform.position;
                 explosionPos = new Vector3(explosionPos.x, explosionPos.y + 0.5f, explosionPos.z);
@@ -34,11 +38,6 @@ public class ComplainingHuman : MonoBehaviour
             }
         }
         //print("i collide! id: " + id);
-    }
-
-    public void sayHi()
-    {
-        print("hi");
     }
 
     public void TriggerHighlight()

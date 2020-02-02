@@ -7,18 +7,24 @@ public class Player : MonoBehaviour
 
     public float playerHeight = 0;
     public const float maxVelocity = 2.5f;
-    //public const float maxVelocity = 8f;
+    //public const float maxVelocity = 8f; // for testing
     public const float moveSpeed = 15f;
-    //public const float moveSpeed = 30f;
+    //public const float moveSpeed = 30f; // for testing
     public const float dragModifier = 0.8f;
     public GameObject arrowPrefab;
     public Animator animator;
     public bool hidden = false;
+    public int hiddenInObjects = 0; //counter of objects that we have hidden in
     public bool spotted = false;
     private float xScale;
 
     private Rigidbody2D rb;
     private Vector2 movement;
+
+    public AudioClip hayClip;
+    public AudioClip bushClip;
+    public AudioSource swishSource;
+    public AudioSource stepSource;
 
     private void Awake()
     {
@@ -41,6 +47,16 @@ public class Player : MonoBehaviour
 
             if (movement.magnitude > 0)
             {
+                if (!swishSource.loop && hidden)
+                {
+                    if (!swishSource.isPlaying)
+                        swishSource.Play();
+                    swishSource.loop = true;
+                }
+                if (!stepSource.isPlaying)
+                {
+                    stepSource.Play();
+                }
                 movement.x = movement.x / movement.magnitude;
                 movement.y = movement.y / movement.magnitude;
 
@@ -51,6 +67,18 @@ public class Player : MonoBehaviour
                 else if (movement.x < 0 && transform.localScale.x > 0)
                 {
                     FlipSprite(true);
+                }
+            } else
+            {
+                if (swishSource.loop)
+                {
+                    //swishSource.Pause();
+                    swishSource.loop = false;
+                }
+                if (stepSource.isPlaying)
+                {
+                    stepSource.Stop();
+                    stepSource.time = 0;
                 }
             }
             if (Input.GetButtonDown("Fire1"))
@@ -155,5 +183,26 @@ public class Player : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, -1 * maxVelocity);
             }
         }
+    }
+
+    public void HideInObject()
+    {
+        hiddenInObjects++;
+        transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+        hidden = true;
+        stepSource.volume = 0;
+    }
+
+    public void UnhideFromObject()
+    {
+        hiddenInObjects--;
+        if (hiddenInObjects == 0)
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+            hidden = false;
+            swishSource.Pause();
+            stepSource.volume = 0.4f;
+        }
+
     }
 }

@@ -6,10 +6,10 @@ public class Hideable : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
         if (collision.gameObject.tag.Equals("Player"))
         {
-            collision.transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
-            collision.gameObject.GetComponent<Player>().hidden = true;
+            collision.gameObject.GetComponent<Player>().HideInObject();
         }
     }
 
@@ -17,8 +17,7 @@ public class Hideable : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
-            collision.transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
-            collision.gameObject.GetComponent<Player>().hidden = false;
+            collision.gameObject.GetComponent<Player>().UnhideFromObject();
         }
     }
 }
