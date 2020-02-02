@@ -7,11 +7,14 @@ public class Player : MonoBehaviour
 
     public float playerHeight = 0;
     public const float maxVelocity = 2.5f;
-    //public const float maxVelocity = 4f;
-    public const float dragModifier = 0.8f;
+    //public const float maxVelocity = 8f;
     public const float moveSpeed = 15f;
+    //public const float moveSpeed = 30f;
+    public const float dragModifier = 0.8f;
     public GameObject arrowPrefab;
     public Animator animator;
+    public bool hidden = false;
+    public bool spotted = false;
     private float xScale;
 
     private Rigidbody2D rb;
@@ -30,35 +33,44 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
-        animator.SetFloat("speed", movement.magnitude);
-        
-        if (movement.magnitude > 0)
+        if (!spotted && GameEvents.gameStarted)
         {
-            movement.x = movement.x / movement.magnitude;
-            movement.y = movement.y / movement.magnitude;
+            movement.x = Input.GetAxisRaw("Horizontal");
+            movement.y = Input.GetAxisRaw("Vertical");
+            animator.SetFloat("speed", movement.magnitude);
 
-            if (movement.x > 0 && transform.localScale.x < 0)
+            if (movement.magnitude > 0)
             {
-                FlipSprite(false);
-            } else if (movement.x < 0 && transform.localScale.x > 0)
-            {
-                FlipSprite(true);
+                movement.x = movement.x / movement.magnitude;
+                movement.y = movement.y / movement.magnitude;
+
+                if (movement.x > 0 && transform.localScale.x < 0)
+                {
+                    FlipSprite(false);
+                }
+                else if (movement.x < 0 && transform.localScale.x > 0)
+                {
+                    FlipSprite(true);
+                }
             }
-        }
-        if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("Fire1"))
+            {
+                //ShootArrow();
+                //Debug.Log("Pressed primary button.");
+            }
+        } else
         {
-            //ShootArrow();
-            //Debug.Log("Pressed primary button.");
+            movement = new Vector2(0, 0);
+            animator.SetFloat("speed", 0);
         }
 
+
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        print("player collision");
-    }
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    print("player collision");
+    //}
 
     private void FlipSprite(bool toLeft)
     {

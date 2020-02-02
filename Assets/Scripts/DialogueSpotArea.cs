@@ -6,37 +6,48 @@ public class DialogueSpotArea : MonoBehaviour
 {
 
     public int id;
+    public ChatVisibleArea chatVisibleArea;
     // Start is called before the first frame update
     void Start()
     {
         //print(GameEvents.current);
-        GameEvents.current.onPlayerEnterDialogueZone += OnPlayerEnter;
+        GameEvents.current.onPlayerSpotted += OnPlayerSpotted;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //print("entered dialogue");
-        if (collision.gameObject.tag.Equals("Player"))
+        print("entered dialogue");
+        if (collision.gameObject.tag.Equals("Player") && !collision.gameObject.GetComponent<Player>().hidden)
         {
-            GameEvents.current.PlayerEnterDialogueZone(id);
+            Spotted();
         }
     }
 
-    private void OnPlayerEnter(int id)
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Player") && !collision.gameObject.GetComponent<Player>().hidden && !collision.gameObject.GetComponent<Player>().spotted)
+        {
+            Spotted();
+        }
+    }
+
+    private void OnPlayerSpotted(int id)
     {
         if (this.id == id)
         {
-            OnPlayerEnter();
+            Spotted();
         }
     }
 
-    private void OnPlayerEnter()
+    private void Spotted()
     {
-        print("spotted at dialogue with id " + id);
+        GameEvents.current.GameOver();
+        print("AAAAA!!!");
+        chatVisibleArea.ShowExclamationMark();
     }
 
     private void OnDestroy()
     {
-        GameEvents.current.onPlayerEnterDialogueZone -= OnPlayerEnter;
+        GameEvents.current.onPlayerSpotted -= OnPlayerSpotted;
     }
 }

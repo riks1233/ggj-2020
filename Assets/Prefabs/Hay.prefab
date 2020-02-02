@@ -91,9 +91,11 @@ GameObject:
   m_Component:
   - component: {fileID: 362043513477732006}
   - component: {fileID: 362043513477732007}
+  - component: {fileID: 3362848823935651117}
+  - component: {fileID: 5251615712405345828}
   m_Layer: 0
   m_Name: Hay
-  m_TagString: Untagged
+  m_TagString: Hideable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,3 +126,31 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!70 &3362848823935651117
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362043513477732008}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.089944266, y: 0.44972584}
+  m_Size: {x: 4.1381097, y: 0.980022}
+  m_Direction: 1
+--- !u!114 &5251615712405345828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362043513477732008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf752c735f970684d99bcd6fdae3ac3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
